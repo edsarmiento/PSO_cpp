@@ -7,16 +7,22 @@
 - **Authors (from code):** E. David Sarmiento, V. Alejandro Herrera Magallanes  
 - **Tech stack:** C++, **GTKmm 3.0** (GUI), glibmm (threading via `std::thread` + `Glib::Dispatcher`).
 
-### Main components
+### Source layout (refactored)
 
-| Component        | Role |
-|-----------------|------|
-| `UserInterface.cpp` | Entry point: starts GTK and shows the main window. |
-| `PSO_Interface.cpp/h` | Main window: file choosers, “Align” button, PSO parameters (population, iterations, c1, c2, w), output text area. |
-| `PSOThread.cpp/h`     | Worker thread: loads two sequences with `scannADN()`, runs `alinear()` in background, sends result to GUI. |
-| `pso.cpp/h`           | PSO core: `basicPSO()`, `alinear()`, NUC44 scoring matrix, fitness and population helpers. |
-| `Scanner.cpp/h`       | Reads GenBank-style files; extracts sequence from lines after `ORIGIN` until `//`. |
-| `main.cpp`            | **Fully commented out**; legacy CLI/experimental code. The real `main()` is in `UserInterface.cpp`. |
+Code is split by responsibility with namespaces `pso::core`, `pso::io`, `pso::gui`:
+
+| Directory / file | Role |
+|------------------|------|
+| **src/main.cpp** | Entry point: starts GTK, runs `pso::gui::MainWindow`. |
+| **src/core/** | PSO algorithm and alignment (no GUI). |
+| `scoring.h/cpp` | NUC44 matrix, `nucleotide_to_int()`, `drandom()`. |
+| `pso_algorithm.h/cpp` | `get_initial_population()`, `basic_pso()`, `fitness_nuc44()`. |
+| `alignment.h/cpp` | `align_sequences()` (runs PSO and writes best alignment to a stream). |
+| **src/io/** | File I/O. |
+| `genbank_reader.h/cpp` | `load_sequence_from_genbank()` — reads sequence from NCBI GenBank-style files. |
+| **src/gui/** | GTK UI. |
+| `main_window.h/cpp` | Main window: file choosers, PSO parameters, output text area. |
+| `alignment_worker.h/cpp` | Background thread: loads sequences, calls `align_sequences()`, signals when done. |
 
 ### Data files
 
@@ -28,7 +34,29 @@
 
 ## How to build and run
 
-### 1. Install GTKmm 3.0
+### Quick start (after installing GTKmm 3.0)
+
+From the project root directory:
+
+```bash
+make
+./dist/Debug/GNU-Linux-x86/pso_cpp
+```
+
+- **`make`** — compiles the project and produces the executable.
+- **`./dist/Debug/GNU-Linux-x86/pso_cpp`** — runs the GUI application.
+
+To do a clean rebuild:
+
+```bash
+make clean
+make
+./dist/Debug/GNU-Linux-x86/pso_cpp
+```
+
+---
+
+### 1. Install GTKmm 3.0 (first time only)
 
 The project is ported to **GTKmm 3.0**. Install the development package:
 
@@ -57,13 +85,16 @@ The project uses a **standalone Makefile** (no NetBeans/IDE project files). The 
 From the project root:
 
 ```bash
-make          # or: make build
-make clean    # remove build/ and dist/
+make
 ```
 
-The executable is produced at:
+(or `make build`). The executable is created at **`dist/Debug/GNU-Linux-x86/pso_cpp`**.
 
-- **Debug:** `dist/Debug/GNU-Linux-x86/pso_cpp`
+To remove build artifacts and the executable:
+
+```bash
+make clean
+```
 
 ### 3. Run
 
@@ -71,7 +102,7 @@ The executable is produced at:
 ./dist/Debug/GNU-Linux-x86/pso_cpp
 ```
 
-You need a display (X11/Wayland); the app opens a window where you:
+You need a display (X11/Wayland). The app opens a window where you:
 
 1. Select two “ADN” (sequence) files (GenBank-style).
 2. Optionally adjust PSO parameters (population, iterations, c1, c2, w).
