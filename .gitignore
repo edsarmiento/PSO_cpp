@@ -1,0 +1,67 @@
+# Build outputs
+build/
+dist/
+*.o
+*.obj
+*.lo
+*.d
+*.a
+*.so
+*.so.*
+*.dylib
+*.dll
+*.exe
+*.out
+*.app
+
+# Generated / dependency files
+.dep.inc
+*.d
+
+# IDE / editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.cproject
+.settings/
+nbproject/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Debug / core dumps
+core
+core.*
+*.core
+vgcore.*
+
+# Local config or secrets
+*.local
+.env
+.env.*
+
+# Backup and temp
+*.bak
+*.tmp
+*.temp
+*.log
+
+# Package / install
+*.tar
+*.tar.gz
+*.zip
+*.rpm
+*.deb
+
+# Optional: uncomment if you add CMake later
+# CMakeCache.txt
+# CMakeFiles/
+# cmake_install.cmake
+# Makefile.cmake
+# *.cmake
+# !CMakeLists.txt
