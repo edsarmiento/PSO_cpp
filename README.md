@@ -50,21 +50,15 @@ sudo apt install libgtkmm-3.0-dev
 sudo pacman -S gtkmm-3.0
 ```
 
-The Makefile looks for `gtkmm-3.0` or `gtkmm3.0` via `pkg-config`.
+The project uses a **standalone Makefile** (no NetBeans/IDE project files). The Makefile looks for `gtkmm-3.0` or `gtkmm3.0` via `pkg-config`.
 
 ### 2. Build
 
 From the project root:
 
 ```bash
-cd "/home/davidst/Downloads/mic/MCIC/TODO tesis/PSO_cpp"
-make build
-```
-
-Or:
-
-```bash
-make
+make          # or: make build
+make clean    # remove build/ and dist/
 ```
 
 The executable is produced at:
