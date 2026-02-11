@@ -41,38 +41,37 @@ protected:
     Gtk::Label lblADN2;
     Gtk::FileChooserButton fcbADN2;
     
-    Gtk::Table tblParameters;
+    Gtk::Grid gridParameters;
     
     Gtk::Label lblPopulation;
     Gtk::SpinButton spnPopulation;
-    Gtk::Adjustment adjPopulation;
+    Glib::RefPtr<Gtk::Adjustment> adjPopulation;
     
     Gtk::Label lblDimensions;
     Gtk::SpinButton spnDimensions;
-    Gtk::Adjustment adjDimensions;
+    Glib::RefPtr<Gtk::Adjustment> adjDimensions;
     
     Gtk::Label lblIterations;
     Gtk::SpinButton spnIterations;
-    Gtk::Adjustment adjIterations;
+    Glib::RefPtr<Gtk::Adjustment> adjIterations;
     
     Gtk::Label lblC1;
     Gtk::SpinButton spnC1;
-    Gtk::Adjustment adjC1;
+    Glib::RefPtr<Gtk::Adjustment> adjC1;
     
     Gtk::Label lblC2;
     Gtk::SpinButton spnC2;
-    Gtk::Adjustment adjC2;
+    Glib::RefPtr<Gtk::Adjustment> adjC2;
    
     Gtk::Label lblW;
     Gtk::SpinButton spnW;
-    Gtk::Adjustment adjW;
+    Glib::RefPtr<Gtk::Adjustment> adjW;
     
     Gtk::Button cmdAlign;
     Gtk::Button credits;
     
     
     Gtk::Frame frmOutPut;
-    Gtk::Alignment aligOutPut;
     Gtk::ScrolledWindow scrOutPut;
     Gtk::TextView txtOutPut;
     Glib::RefPtr<Gtk::TextBuffer> bufOutput;
@@ -80,12 +79,12 @@ protected:
 
     Gtk::Statusbar stbStatus;
     
-    Gtk::HBox hbFile1;
-    Gtk::HBox hbFile2;
-    Gtk::HBox hbAlign;
-    Gtk::HBox hbOutPut;
+    Gtk::Box hbFile1;
+    Gtk::Box hbFile2;
+    Gtk::Box hbAlign;
+    Gtk::Box hbOutPut;
 
-    Gtk::VBox vbMain;
+    Gtk::Box vbMain;
 };
 
 #endif	/* PSO_INTERFACE_H */

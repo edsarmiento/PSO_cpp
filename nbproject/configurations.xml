@@ -57,12 +57,10 @@
       <compileType>
         <ccTool>
           <incDir>
-            <pElem>/usr/include/gtkmm-2.4</pElem>
           </incDir>
           <incFile>
-            <pElem>/usr/include/glibmm-2.4/glibmm.h</pElem>
           </incFile>
-          <commandLine>`pkg-config --cflags gtkmm-2.4` `pkg-config --libs gtkmm-2.4`</commandLine>
+          <commandLine>$(shell pkg-config --cflags gtkmm-3.0)</commandLine>
         </ccTool>
       </compileType>
       <item path="src/PSOThread.cpp" ex="false" tool="1" flavor2="0">

@@ -5,7 +5,7 @@
 **PSO Comparator Algorithm V2013GUI** is a C++ application that uses **Particle Swarm Optimization (PSO)** to find good **sequence alignments** between two DNA/RNA sequences (e.g. in NCBI GenBank format).
 
 - **Authors (from code):** E. David Sarmiento, V. Alejandro Herrera Magallanes  
-- **Tech stack:** C++, **GTKmm 2.4** (GUI), Glib (threading).
+- **Tech stack:** C++, **GTKmm 3.0** (GUI), glibmm (threading via `std::thread` + `Glib::Dispatcher`).
 
 ### Main components
 
@@ -26,37 +26,31 @@
 
 ---
 
-## Why the build failed
-
-The project did **not** build because **GTKmm 2.4** is not installed (and on many current Linux distros it is not available by default):
-
-- `pkg-config` cannot find `gtkmm-2.4`.
-- The Makefile uses `pkg-config --cflags gtkmm-2.4` and `--libs gtkmm-2.4`, and hardcodes `/usr/include/glibmm-2.4/glibmm.h`, which is missing.
-
-So the failure is **missing dependencies**, not a bug in the project code.
-
----
-
 ## How to build and run
 
-### 1. Install GTKmm 2.4 (if your distro has it)
+### 1. Install GTKmm 3.0
 
-**Debian/Ubuntu:**
+The project is ported to **GTKmm 3.0**. Install the development package:
 
-```bash
-sudo apt install libgtkmm-2.4-dev
-```
-
-**Fedora (legacy):**
+**Fedora / RHEL:**
 
 ```bash
-sudo dnf install gtkmm24-devel
+sudo dnf install gtkmm30-devel
 ```
 
-If `gtkmm-2.4` is not available (e.g. Fedora 43), you have two options:
+**Debian / Ubuntu:**
 
-- Use a different environment (Docker, older distro, or VM) where `gtkmm-2.4` is still packaged, or  
-- Port the app to **GTKmm 3** (e.g. `gtkmm30`) and adjust includes/API; this requires code and Makefile changes.
+```bash
+sudo apt install libgtkmm-3.0-dev
+```
+
+**Arch:**
+
+```bash
+sudo pacman -S gtkmm-3.0
+```
+
+The Makefile looks for `gtkmm-3.0` or `gtkmm3.0` via `pkg-config`.
 
 ### 2. Build
 
@@ -91,19 +85,16 @@ You need a display (X11/Wayland); the app opens a window where you:
 
 ---
 
-## Optional: Fix Makefile flags
+## Port from GTKmm 2.4 to 3.0 (summary of changes)
 
-In `nbproject/Makefile-Debug.mk`, **libs** should not be in the compiler flags. Prefer:
-
-- **Compiler (CXXFLAGS):** only `pkg-config --cflags gtkmm-2.4` (and `-g`, `-I`, etc.).
-- **Linker:** add `pkg-config --libs gtkmm-2.4` to the link line (e.g. `LDLIBSOPTIONS`) so that linking picks up the GTKmm libraries.
-
-If your system has a different package (e.g. `gtkmm-3.0`), replace `gtkmm-2.4` with that and adjust any hardcoded include paths accordingly.
+- **Makefiles:** Use `pkg-config gtkmm-3.0` (or `gtkmm3.0`); compiler gets `--cflags`, linker gets `--libs`. No hardcoded includes.
+- **Widgets:** `Gtk::Table` → `Gtk::Grid`; `Gtk::HBox`/`Gtk::VBox` → `Gtk::Box` with `Gtk::ORIENTATION_*`; `Gtk::Alignment` removed (margins on `Gtk::ScrolledWindow`).
+- **API:** `Gtk::Label::set_alignment(x, y)` now uses floats 0.0–1.0; `set_position(Gtk::WindowPosition::WIN_POS_CENTER)`; `modify_font()` → `override_font()`.
+- **Threading:** `Glib::Thread` replaced by `std::thread`; `Glib::Dispatcher` used to emit `signal_finished_()` on the main thread (GTK-safe).
 
 ---
 
 ## Summary
 
-- **Project:** PSO-based sequence alignment with a GTKmm 2.4 GUI.  
-- **Run:** Install `gtkmm-2.4` (or port to gtkmm3), then `make build` and run `dist/Debug/GNU-Linux-x86/pso_cpp`.  
-- **Build failure cause:** Missing `gtkmm-2.4` (and glibmm-2.4) on your system.
+- **Project:** PSO-based sequence alignment with a **GTKmm 3.0** GUI.  
+- **Run:** Install `gtkmm-3.0` (e.g. `gtkmm30-devel` on Fedora, `libgtkmm-3.0-dev` on Debian/Ubuntu), then `make build` and run `dist/Debug/GNU-Linux-x86/pso_cpp`.

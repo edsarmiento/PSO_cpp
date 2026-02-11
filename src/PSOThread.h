@@ -9,8 +9,11 @@
 #define	PSOTHREAD_H
 
 #include <glibmm.h>
+#include <glibmm/dispatcher.h>
 #include <sstream>
 #include <string>
+#include <thread>
+#include <memory>
 
 class PSOThread {
 public:
@@ -33,7 +36,10 @@ public:
     void set_w(double w){this->w=w;}
     
 private:
-    Glib::Thread* thread_;
+    void on_finished_from_main_thread();
+
+    std::unique_ptr<std::thread> thread_;
+    Glib::Dispatcher dispatcher_;
     std::stringstream sout;
 
     sigc::signal<void> signal_finished_;

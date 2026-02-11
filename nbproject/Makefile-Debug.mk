@@ -46,9 +46,11 @@ OBJECTFILES= \
 # C Compiler Flags
 CFLAGS=
 
-# CC Compiler Flags
-CCFLAGS=`pkg-config --cflags gtkmm-2.4` `pkg-config --libs gtkmm-2.4` 
-CXXFLAGS=`pkg-config --cflags gtkmm-2.4` `pkg-config --libs gtkmm-2.4` 
+# gtkmm: try gtkmm-3.0 then gtkmm3.0 (e.g. Fedora uses gtkmm3.0.pc)
+GTKMM_PKG := $(shell pkg-config --exists gtkmm-3.0 2>/dev/null && echo gtkmm-3.0 || echo gtkmm3.0)
+# CC Compiler Flags (cflags only; libs go to linker)
+CCFLAGS=$(shell pkg-config --cflags $(GTKMM_PKG))
+CXXFLAGS=$(shell pkg-config --cflags $(GTKMM_PKG))
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -57,7 +59,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=$(shell pkg-config --libs $(GTKMM_PKG))
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -70,32 +72,32 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/pso_cpp: ${OBJECTFILES}
 ${OBJECTDIR}/src/PSOThread.o: src/PSOThread.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/gtkmm-2.4 -include /usr/include/glibmm-2.4/glibmm.h -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/PSOThread.o src/PSOThread.cpp
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/PSOThread.o src/PSOThread.cpp
 
 ${OBJECTDIR}/src/PSO_Interface.o: src/PSO_Interface.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/gtkmm-2.4 -include /usr/include/glibmm-2.4/glibmm.h -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/PSO_Interface.o src/PSO_Interface.cpp
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/PSO_Interface.o src/PSO_Interface.cpp
 
 ${OBJECTDIR}/src/Scanner.o: src/Scanner.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/gtkmm-2.4 -include /usr/include/glibmm-2.4/glibmm.h -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Scanner.o src/Scanner.cpp
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Scanner.o src/Scanner.cpp
 
 ${OBJECTDIR}/src/UserInterface.o: src/UserInterface.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/gtkmm-2.4 -include /usr/include/glibmm-2.4/glibmm.h -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/UserInterface.o src/UserInterface.cpp
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/UserInterface.o src/UserInterface.cpp
 
 ${OBJECTDIR}/src/main.o: src/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/gtkmm-2.4 -include /usr/include/glibmm-2.4/glibmm.h -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/main.o src/main.cpp
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/main.o src/main.cpp
 
 ${OBJECTDIR}/src/pso.o: src/pso.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/gtkmm-2.4 -include /usr/include/glibmm-2.4/glibmm.h -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/pso.o src/pso.cpp
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/pso.o src/pso.cpp
 
 # Subprojects
 .build-subprojects:

@@ -46,9 +46,11 @@ OBJECTFILES= \
 # C Compiler Flags
 CFLAGS=
 
+# gtkmm: try gtkmm-3.0 then gtkmm3.0
+GTKMM_PKG := $(shell pkg-config --exists gtkmm-3.0 2>/dev/null && echo gtkmm-3.0 || echo gtkmm3.0)
 # CC Compiler Flags
-CCFLAGS=
-CXXFLAGS=
+CCFLAGS=$(shell pkg-config --cflags $(GTKMM_PKG))
+CXXFLAGS=$(shell pkg-config --cflags $(GTKMM_PKG))
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -57,7 +59,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=$(shell pkg-config --libs $(GTKMM_PKG))
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}

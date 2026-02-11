@@ -13,20 +13,24 @@ PSOWindow::PSOWindow():
         credits("E. David Sarmiento, V. Alejandro Herrera"),
         frmOutPut("Output:"),
         lblPopulation("Population: "),
-        adjPopulation(5000,100,100000000,100),
+        adjPopulation(Gtk::Adjustment::create(5000, 100, 100000000, 100, 1000, 0)),
         lblDimensions("Dimensions: "),
-        adjDimensions(3,1,1000),
+        adjDimensions(Gtk::Adjustment::create(3, 1, 1000, 1, 10, 0)),
         lblIterations("Iterations: "),
-        adjIterations(500,1,100000000,100),
+        adjIterations(Gtk::Adjustment::create(500, 1, 100000000, 100, 1000, 0)),
         lblC1("c1: "),
-        adjC1(3.0,0.1,5.0,0.1),
+        adjC1(Gtk::Adjustment::create(3.0, 0.1, 5.0, 0.1, 0.5, 0)),
         lblC2("c2: "),
-        adjC2(1.0,0.1,5.0,0.1),
+        adjC2(Gtk::Adjustment::create(1.0, 0.1, 5.0, 0.1, 0.5, 0)),
         lblW("w: "),
-        adjW(0.8,0.1,100.0,0.1),
-        tblParameters(2,6)
+        adjW(Gtk::Adjustment::create(0.8, 0.1, 100.0, 0.1, 0.5, 0)),
+        hbFile1(Gtk::ORIENTATION_HORIZONTAL, 0),
+        hbFile2(Gtk::ORIENTATION_HORIZONTAL, 0),
+        hbAlign(Gtk::ORIENTATION_HORIZONTAL, 0),
+        hbOutPut(Gtk::ORIENTATION_HORIZONTAL, 0),
+        vbMain(Gtk::ORIENTATION_VERTICAL, 15)
 {
-    thread=new PSOThread();
+    thread = new PSOThread();
     initialize_widgets();
     configure_dialogs();
     connect_signals();
@@ -42,20 +46,17 @@ void PSOWindow::initialize_widgets(){
     set_position(Gtk::WIN_POS_CENTER);
     set_default_size(800,600);
     
-    vbMain.set_spacing(15);
-    
-    
-    lblTitle.set_alignment(Gtk::ALIGN_CENTER,Gtk::ALIGN_CENTER);
+    lblTitle.set_alignment(0.5f, 0.5f);
     vbMain.pack_start(lblTitle,false,true,0);
     
-    lblADN1.set_alignment(Gtk::ALIGN_LEFT,Gtk::ALIGN_CENTER);
+    lblADN1.set_alignment(0.0f, 0.5f);
     
     hbFile1.pack_start(lblADN1,false,false,0);
     hbFile1.pack_start(fcbADN1,true,true,0);
     
     vbMain.pack_start(hbFile1,false,false,0);
     
-    lblADN2.set_alignment(Gtk::ALIGN_LEFT,Gtk::ALIGN_CENTER);
+    lblADN2.set_alignment(0.0f, 0.5f);
     
     hbFile2.pack_start(lblADN2,false,false,0);
     hbFile2.pack_start(fcbADN2,true,true,0);
@@ -68,62 +69,61 @@ void PSOWindow::initialize_widgets(){
     spnPopulation.set_adjustment(adjPopulation);
     spnPopulation.set_numeric(true);
     spnPopulation.set_digits(0);
-    spnPopulation.set_alignment(Gtk::ALIGN_RIGHT);
+    spnPopulation.set_alignment(1.0f);
     
     spnDimensions.set_adjustment(adjDimensions);
     spnDimensions.set_numeric(true);
     spnDimensions.set_digits(0);
-    spnDimensions.set_alignment(Gtk::ALIGN_RIGHT);
+    spnDimensions.set_alignment(1.0f);
 //    spnDimensions.set_editable(false);
     spnDimensions.set_sensitive(false);
     
     spnIterations.set_adjustment(adjIterations);
     spnIterations.set_numeric(true);
     spnIterations.set_digits(0);
-    spnIterations.set_alignment(Gtk::ALIGN_RIGHT);
+    spnIterations.set_alignment(1.0f);
     
     spnC1.set_adjustment(adjC1);
     spnC1.set_numeric(true);
     spnC1.set_digits(2);
-    spnC1.set_alignment(Gtk::ALIGN_RIGHT);
+    spnC1.set_alignment(1.0f);
     
     spnC2.set_adjustment(adjC2);
     spnC2.set_numeric(true);
     spnC2.set_digits(2);
-    spnC2.set_alignment(Gtk::ALIGN_RIGHT);
+    spnC2.set_alignment(1.0f);
     
     spnW.set_adjustment(adjW);
     spnW.set_numeric(true);
     spnW.set_digits(2);
-    spnW.set_alignment(Gtk::ALIGN_RIGHT);
+    spnW.set_alignment(1.0f);
     
-    tblParameters.set_col_spacings(5);
-    tblParameters.set_row_spacings(5);
+    gridParameters.set_column_spacing(5);
+    gridParameters.set_row_spacing(5);
     
-    tblParameters.attach(lblPopulation,0,1,0,1);
-    tblParameters.attach(spnPopulation,1,2,0,1);
-    tblParameters.attach(lblDimensions,2,3,0,1);
-    tblParameters.attach(spnDimensions,3,4,0,1);
-    tblParameters.attach(lblIterations,4,5,0,1);
-    tblParameters.attach(spnIterations,5,6,0,1);
-    tblParameters.attach(lblC1,0,1,1,2);
-    tblParameters.attach(spnC1,1,2,1,2);
-    tblParameters.attach(lblC2,2,3,1,2);
-    tblParameters.attach(spnC2,3,4,1,2);
-    tblParameters.attach(lblW,4,5,1,2);
-    tblParameters.attach(spnW,5,6,1,2);
+    gridParameters.attach(lblPopulation, 0, 0, 1, 1);
+    gridParameters.attach(spnPopulation, 1, 0, 1, 1);
+    gridParameters.attach(lblDimensions, 2, 0, 1, 1);
+    gridParameters.attach(spnDimensions, 3, 0, 1, 1);
+    gridParameters.attach(lblIterations, 4, 0, 1, 1);
+    gridParameters.attach(spnIterations, 5, 0, 1, 1);
+    gridParameters.attach(lblC1, 0, 1, 1, 1);
+    gridParameters.attach(spnC1, 1, 1, 1, 1);
+    gridParameters.attach(lblC2, 2, 1, 1, 1);
+    gridParameters.attach(spnC2, 3, 1, 1, 1);
+    gridParameters.attach(lblW, 4, 1, 1, 1);
+    gridParameters.attach(spnW, 5, 1, 1, 1);
 
-    vbMain.pack_start(tblParameters,false,true,0);
+    vbMain.pack_start(gridParameters, false, true, 0);
     
-    aligOutPut.set_padding(0,0,12,0);
-    bufOutput=Gtk::TextBuffer::create();
+    bufOutput = Gtk::TextBuffer::create();
     txtOutPut.set_buffer(bufOutput);
     
-    txtOutPut.modify_font(Pango::FontDescription("monospace 12"));
+    txtOutPut.override_font(Pango::FontDescription("monospace 12"));
+    scrOutPut.set_margin_end(12);
     scrOutPut.add(txtOutPut);
     
-    aligOutPut.add(scrOutPut);
-    frmOutPut.add(aligOutPut);
+    frmOutPut.add(scrOutPut);
     
     vbMain.pack_start(frmOutPut,true,true,0);
     
@@ -140,18 +140,17 @@ void PSOWindow::connect_signals(){
 }
 
 void PSOWindow::configure_dialogs() {
-    Gtk::FileFilter filter_text;
-    filter_text.set_name("Text files");
-    filter_text.add_mime_type("text/plain");
+    Glib::RefPtr<Gtk::FileFilter> filter_text = Gtk::FileFilter::create();
+    filter_text->set_name("Text files");
+    filter_text->add_mime_type("text/plain");
     fcbADN1.add_filter(filter_text);
     fcbADN2.add_filter(filter_text);
-    
-    Gtk::FileFilter filter_any;
-    filter_any.set_name("Any files");
-    filter_any.add_pattern("*");
+
+    Glib::RefPtr<Gtk::FileFilter> filter_any = Gtk::FileFilter::create();
+    filter_any->set_name("Any files");
+    filter_any->add_pattern("*");
     fcbADN1.add_filter(filter_any);
     fcbADN2.add_filter(filter_any);
-
 }
 
 void PSOWindow::cmdAlign_clicked(){
