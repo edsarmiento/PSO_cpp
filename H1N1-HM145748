@@ -1,0 +1,56 @@
+LOCUS       HM145748                1422 bp    cRNA    linear   VRL 27-APR-2010
+DEFINITION  Influenza A virus (A/Haishu/SWL110/2010(H1N1)) segment 6
+            neuraminidase (NA) gene, complete cds.
+ACCESSION   HM145748
+VERSION     HM145748.1  GI:295315537
+DBLINK      Project:37813
+KEYWORDS    .
+SOURCE      Influenza A virus (A/Haishu/SWL110/2010(H1N1))
+  ORGANISM  Influenza A virus (A/Haishu/SWL110/2010(H1N1))
+            Viruses; ssRNA negative-strand viruses; Orthomyxoviridae;
+            Influenzavirus A.
+REFERENCE   1  (bases 1 to 1422)
+  AUTHORS   Chen,Y., Zhang,Y., Lu,Y., Mao,H., Zhou,M., Li,Z., Ni,Y. and Zhou,B.
+  TITLE     Sequence analysis of an oseltamivir resistence A (H1N1) influenza
+            virus strain in Zhejiang Province, China
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 1422)
+  AUTHORS   Chen,Y., Zhang,Y., Lu,Y., Mao,H., Zhou,M., Li,Z., Ni,Y. and Zhou,B.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (26-APR-2010) Institute of Virology, Zhejiang Provincial
+            Center for Disease Control and Prevention, No. 630, Xincheng Road,
+            Binjiang District, Hangzhou, Zhejiang 310051, China
+COMMENT     Swine influenza A (H1N1) virus isolated during human swine flu
+            outbreak of 2009-2010.
+FEATURES             Location/Qualifiers
+     source          1..1422
+                     /organism="Influenza A virus (A/Haishu/SWL110/2010(H1N1))"
+                     /mol_type="viral cRNA"
+                     /strain="A/Haishu/SWL110/2010"
+                     /serotype="H1N1"
+                     /host="Homo sapiens; gender F; age 29"
+                     /db_xref="taxon:759294"
+                     /segment="6"
+                     /country="China: Zhejiang"
+                     /collection_date="04-Jan-2010"
+                     /note="lineage: swl"
+     gene            6..1415
+                     /gene="NA"
+     CDS             6..1415
+                     /gene="NA"
+                     /codon_start=1
+                     /product="neuraminidase"
+                     /protein_id="ADF97837.1"
+                     /db_xref="GI:295315538"
+                     /translation="MNPNQKIITIGSVCMTIGMANLILQIGNIISIWISHSIQLGNQN
+                     QIETCNQSVITYENNTWVNQTYVNISNTNFAAGQSVVSVKLAGNSSLCPVSGWAIYSK
+                     DNSIRIGSKGDVFVIREPFISCSPLECRTFFLTQGALLNDKHSNGTIKDRSPYRTLMS
+                     CPIGEVPSPYNSRFESVAWSASACHDGINWLTIGISGPDNGAVAVLKYNGIITDTIKS
+                     WRNNILRTQESECACVNGSCFTVMTDGPSDGQASYKIFRIEKGKIVKSVEMNAPNYYY
+                     EECSCYPDSSEITCVCRDNWHGSNRPWVSFNQNLEYQIGYICSGIFGDNPRPNDKTGS
+                     CGPVSSNGANGVKGFSFKYGNGVWIGRTKSISSRNGFEMIWDPNGWTGTDNNFSIKQD
+                     IVGINEWSGYSGSFVQHPELTGLDCIRPCFWVELIRGRPKENTIWTSGSSISFCGVNS
+                     DTVGWSWPDGAELPFTIDK"
+ORIGIN      
+        1 aaaaa
+//
