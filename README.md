@@ -17,7 +17,8 @@ Code is split by responsibility with namespaces `pso::core`, `pso::io`, `pso::gu
 | **src/core/** | PSO algorithm and alignment (no GUI). |
 | `scoring.h/cpp` | NUC44 matrix, `nucleotide_to_int()`, `drandom()`. |
 | `pso_algorithm.h/cpp` | `get_initial_population()`, `basic_pso()`, `fitness_nuc44()`. |
-| `alignment.h/cpp` | `align_sequences()` (runs PSO and writes best alignment to a stream). |
+| `pairwise_align.h/cpp` | Smith–Waterman local alignment **with gaps** (affine gap penalty), NUC44. |
+| `alignment.h/cpp` | `align_sequences()`: PSO finds best region, then Smith–Waterman with gaps produces the final alignment. |
 | **src/io/** | File I/O. |
 | `genbank_reader.h/cpp` | `load_sequence_from_genbank()` — reads sequence from NCBI GenBank-style files. |
 | **src/gui/** | GTK UI. |

@@ -15,7 +15,7 @@ DISTDIR  = dist/Debug/GNU-Linux-x86
 TARGET   = $(DISTDIR)/pso_cpp
 
 SRCS = src/main.cpp \
-       src/core/scoring.cpp src/core/pso_algorithm.cpp src/core/alignment.cpp \
+       src/core/scoring.cpp src/core/pso_algorithm.cpp src/core/pairwise_align.cpp src/core/alignment.cpp \
        src/io/genbank_reader.cpp \
        src/gui/alignment_worker.cpp src/gui/main_window.cpp
 OBJS = $(patsubst src/%.cpp,$(BUILDDIR)/%.o,$(SRCS))
