@@ -3,9 +3,10 @@
 #include <glibmm.h>
 #include <glibmm/dispatcher.h>
 #include <memory>
-#include <sstream>
 #include <string>
 #include <thread>
+
+#include "core/alignment_result.h"
 
 namespace pso {
 namespace gui {
@@ -20,7 +21,7 @@ public:
     void join();
 
     sigc::signal<void>& signal_finished();
-    std::string get_output();
+    const core::AlignmentResult& get_result() const { return result_; }
 
     void set_file1(const std::string& path) { file1_ = path; }
     void set_file2(const std::string& path) { file2_ = path; }
@@ -37,9 +38,9 @@ private:
 
     std::unique_ptr<std::thread> thread_;
     Glib::Dispatcher dispatcher_;
-    std::stringstream output_;
 
     sigc::signal<void> signal_finished_;
+    core::AlignmentResult result_;
 
     std::string file1_;
     std::string file2_;
