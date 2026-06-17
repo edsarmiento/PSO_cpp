@@ -357,7 +357,6 @@ void MainWindow::show_result(const core::AlignmentResult& result) {
     }
 
     std::ostringstream alignment_header;
-    alignment_header << "Smith-Waterman alignment in best PSO region\n";
     alignment_header << "Region: k=" << result.k << ", j=" << result.j << ", len=" << result.len << "\n";
     alignment_header << "Score with gaps: " << format_double(result.gap_score).raw() << "\n\n";
     buffer_alignment_->set_text(alignment_header.str() + result.alignment_text);
