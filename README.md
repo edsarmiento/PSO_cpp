@@ -4,7 +4,7 @@
 
 **PSO Comparator Algorithm V2013GUI** is a C++ application that uses **Particle Swarm Optimization (PSO)** to find good **sequence alignments** between two DNA/RNA sequences (e.g. in NCBI GenBank format).
 
-- **Authors (from code):** E. David Sarmiento, V. Alejandro Herrera Magallanes  
+- **Authors (from code):** E. David Sarmiento
 - **Tech stack:** C++, **GTKmm 3.0** (GUI), glibmm (threading via `std::thread` + `Glib::Dispatcher`).
 
 ### Source layout (refactored)

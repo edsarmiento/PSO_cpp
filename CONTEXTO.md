@@ -46,7 +46,7 @@ Documento de referencia que consolida el análisis del código, la arquitectura 
 | **Título** | Máximas similitudes en secuencias de ADN mediante el algoritmo de optimización de enjambre de partículas |
 | **Autor** | Ing. Eleazar David Sarmiento Torres |
 | **Asesora** | Dra. Leticia Flores Pulido |
-| **Colaborador** | Ing. Víctor Alejandro Herrera Magallanes (agradecimientos en tesis; coautor en README del código) |
+(agradecimientos en tesis; coautor en README del código) |
 | **Programa** | Maestría en Ciencias en Ingeniería en Computación |
 | **Institución** | Universidad Autónoma de Tlaxcala (UAT) |
 | **Fecha** | Noviembre 2013 |

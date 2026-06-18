@@ -33,9 +33,11 @@ public:
 private:
     void connect_signals();
     void setup_widgets();
+    void setup_menubar();
     void setup_output_notebook();
     void setup_file_filters();
     void on_align_clicked();
+    void on_credits_activated();
     void on_alignment_finished(AlignmentWorker* worker);
     void show_result(const core::AlignmentResult& result);
     void clear_results();
@@ -88,6 +90,10 @@ private:
 
     Gtk::Label lbl_status_;
 
+    Gtk::MenuBar menubar_;
+    Gtk::MenuItem menuitem_credits_;
+
+    Gtk::Box box_root_;
     Gtk::Box box_columns_;
     Gtk::Box box_left_;
     Gtk::Box box_right_;

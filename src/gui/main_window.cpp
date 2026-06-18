@@ -28,7 +28,7 @@ MainWindow::MainWindow()
       fcb_file1_("Select a sequence file"),
       lbl_file2_("Subject String:"),
       fcb_file2_("Select a sequence file"),
-      btn_align_("Align"),
+      btn_align_("Start process"),
       lbl_status_(""),
       lbl_population_("Population:"),
       adj_population_(Gtk::Adjustment::create(5000, 100, 100000000, 100, 1000, 0)),
@@ -47,10 +47,13 @@ MainWindow::MainWindow()
       frame_params_("PSO Parameters"),
       frame_output_("Results:"),
       box_columns_(Gtk::ORIENTATION_HORIZONTAL, 16),
+      box_root_(Gtk::ORIENTATION_VERTICAL, 0),
       box_left_(Gtk::ORIENTATION_VERTICAL, 10),
       box_right_(Gtk::ORIENTATION_VERTICAL, 10),
+      menuitem_credits_("_Credits"),
       history_store_(Gtk::ListStore::create(history_columns_)) {
     worker_ = std::make_unique<AlignmentWorker>();
+    setup_menubar();
     setup_widgets();
     setup_output_notebook();
     setup_file_filters();
@@ -66,9 +69,11 @@ void MainWindow::setup_widgets() {
 
     box_main_.set_margin_start(12);
     box_main_.set_margin_end(12);
-    box_main_.set_margin_top(10);
+    box_main_.set_margin_top(8);
     box_main_.set_margin_bottom(8);
     box_main_.set_spacing(8);
+    box_main_.set_hexpand(true);
+    box_main_.set_vexpand(true);
 
     box_columns_.set_hexpand(true);
     box_columns_.set_vexpand(true);
@@ -194,9 +199,39 @@ void MainWindow::setup_widgets() {
     box_right_.pack_start(frame_output_, true, true, 0);
 
     box_columns_.pack_start(box_right_, true, true, 0);
+
     box_main_.pack_start(box_columns_, true, true, 0);
 
-    add(box_main_);
+    box_root_.set_hexpand(true);
+    box_root_.set_vexpand(true);
+    box_root_.pack_start(menubar_, false, true, 0);
+    box_root_.pack_start(box_main_, true, true, 0);
+
+    add(box_root_);
+}
+
+void MainWindow::setup_menubar() {
+    menubar_.append(menuitem_credits_);
+    menubar_.set_hexpand(true);
+    menubar_.set_halign(Gtk::ALIGN_FILL);
+}
+
+void MainWindow::on_credits_activated() {
+    Gtk::MessageDialog dialog(
+        *this,
+        "PSO Comparator Algorithm V2013GUI\n\n"
+        "Authors:\n"
+        "E. David Sarmiento Torres\n"
+        "Thesis advisor:\n"
+        "Dra. Leticia Flores Pulido\n\n"
+        "Master's thesis — UAT, 2014\n"
+        "https://github.com/edsarmiento/PSO_cpp",
+        false,
+        Gtk::MESSAGE_INFO,
+        Gtk::BUTTONS_OK,
+        true);
+    dialog.set_title("Credits");
+    dialog.run();
 }
 
 void MainWindow::setup_output_notebook() {
@@ -237,6 +272,7 @@ void MainWindow::setup_output_notebook() {
 
 void MainWindow::connect_signals() {
     btn_align_.signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_align_clicked));
+    menuitem_credits_.signal_select().connect(sigc::mem_fun(*this, &MainWindow::on_credits_activated));
     worker_->signal_finished().connect(
         sigc::bind<1>(sigc::mem_fun(*this, &MainWindow::on_alignment_finished), worker_.get()));
 }
@@ -276,7 +312,7 @@ void MainWindow::on_align_clicked() {
     worker_->set_c2(spn_c2_.get_value());
     worker_->set_w(spn_w_.get_value());
 
-    lbl_status_.set_text("Aligning...");
+    lbl_status_.set_text("Process in progress");
     clear_results();
     worker_->launch();
 }
@@ -367,7 +403,7 @@ void MainWindow::show_result(const core::AlignmentResult& result) {
 void MainWindow::on_alignment_finished(AlignmentWorker* w) {
     if (w)
         show_result(w->get_result());
-    lbl_status_.set_text("Alignment finished.");
+    lbl_status_.set_text("Process finished.");
 }
 
 }  // namespace gui
